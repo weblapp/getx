@@ -1,0 +1,6 @@
+# GetX's own tests that fail at the published 4.7.3 on Flutter 3.47.8 (PATCHES.md, K-1 to K-4).
+# One test per line: <file under test/> :: <test name>. This list only shrinks.
+test/navigation/snackbar_test.dart :: test snackbar dismissible
+test/navigation/snackbar_test.dart :: test snackbar onTap
+test/navigation/snackbar_test.dart :: Get test actions and icon
+test/navigation/routes_test.dart :: Back swipe dismiss interrupted by route push

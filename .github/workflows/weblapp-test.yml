@@ -1,0 +1,29 @@
+# weblapp's line: GetX's own test suite on the Flutter our apps ship with.
+# A failure not listed in .github/known-failures.txt fails the run (PATCHES.md).
+name: weblapp-test
+
+on:
+  push:
+    branches: ['weblapp/**']
+  pull_request:
+    branches: ['weblapp/**']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.47.8'
+          channel: stable
+      - run: flutter --version
+      - run: flutter pub get
+      - name: flutter test
+        run: flutter test --file-reporter json:test-results.json || true
+      - name: compare with the known failures
+        run: sh .github/scripts/check-known-failures.sh test-results.json .github/known-failures.txt

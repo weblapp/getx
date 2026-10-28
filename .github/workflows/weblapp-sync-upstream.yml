@@ -1,0 +1,22 @@
+# Keeps this fork's master a mirror of jonataslaw/getx master (PATCHES.md: nobody edits master).
+# A fast-forward through GitHub's merge-upstream API; it stops, rather than merging, if master
+# ever diverged, and it cannot carry upstream changes to workflow files (the token lacks that
+# scope) — then the run fails and master is synced by hand.
+name: weblapp-sync-upstream
+
+on:
+  schedule:
+    - cron: '17 4 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: fast-forward master from jonataslaw/getx
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh repo sync "$GITHUB_REPOSITORY" --branch master
